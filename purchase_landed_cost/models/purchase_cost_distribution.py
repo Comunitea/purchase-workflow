@@ -257,7 +257,7 @@ class PurchaseCostDistribution(models.Model):
         )
         # Write the standard price, as SUPERUSER_ID, because a
         # warehouse manager may not have the right to write on products
-        product.sudo().write({'standard_price': new_std_price})
+        product.with_context(force_company=self.env.user.company_id.id).sudo().write({'standard_price': new_std_price})
 
     @api.multi
     def action_done(self):
